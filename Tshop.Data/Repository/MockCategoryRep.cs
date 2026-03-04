@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Tshop.Data.Models;
 
@@ -21,6 +22,16 @@ namespace Tshop.Data.Repository
         public Task<List<Category>> GetAllAsync()
         {
             return Task.FromResult(_categories.ToList());
+        }
+
+        public Task<List<Category>> GetAllAsync(string[]? includes = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Category> GetOne(Expression<Func<Category, bool>> filter, string[]? includes = null)
+        {
+            throw new NotImplementedException();
         }
     }
 }

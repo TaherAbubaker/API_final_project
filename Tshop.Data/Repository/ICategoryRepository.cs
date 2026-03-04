@@ -6,5 +6,6 @@ namespace Tshop.Data.Repository
 {
     public interface ICategoryRepository : IGenericRepository<Category>
     {
+
     }
 }

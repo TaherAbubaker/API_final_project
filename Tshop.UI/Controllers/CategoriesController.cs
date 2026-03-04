@@ -1,9 +1,8 @@
-﻿using Mapster;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Tshop.BLL.Service;
 using Tshop.Data.DTO.Request;
-using Tshop.Data.DTO.Response;
+using Tshop.Data.Models;
 using Tshop.UI.Resources;
 
 namespace Tshop.UI.Controllers
@@ -30,7 +29,6 @@ namespace Tshop.UI.Controllers
             if (request.translations == null || !request.translations.Any())
                 return BadRequest("At least one translation is required");
 
-            // Await the async service call
             var created = await _categoryService.CreateCategory(request);
 
             return Ok(new
@@ -44,12 +42,26 @@ namespace Tshop.UI.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            // Await the async service call
             var categories = await _categoryService.GetAllCategories();
 
             return Ok(new
             {
                 data = categories,
+                message = _localizer["Success"].Value
+            });
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var category = await _categoryService.GetCategory(c => c.Id == id);
+
+            if (category == null)
+                return NotFound();
+
+            return Ok(new
+            {
+                data = category,
                 message = _localizer["Success"].Value
             });
         }
